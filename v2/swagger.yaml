@@ -1442,6 +1442,20 @@ parameters:
     type: array
     items:
       type: integer
+  id:
+    name: id
+    in: path
+    description: |-
+      Unique identifier of the object.
+    type: integer
+    required: true
+  id.parent:
+    name: parent
+    in: path
+    description: |-
+      The ID of the parent of the object.
+    type: integer
+    required: true
   include:
     name: include
     in: query
@@ -1555,20 +1569,6 @@ parameters:
     type: array
     items:
       type: integer
-  id:
-    name: id
-    in: path
-    description: |-
-      Unique identifier of the object.
-    type: integer
-    required: true
-  id.parent:
-    name: parent
-    in: path
-    description: |-
-      The ID of the parent of the object.
-    type: integer
-    required: true
   force:
     name: force
     in: query
