@@ -1,0 +1,1779 @@
+swagger: '2.0'
+info:
+  version: v2
+  title: WordPress REST API
+  description: |-
+    This is the WordPress REST API on www.vx68k.org.
+
+    For API details, see <https://developer.wordpress.org/rest-api/reference/>.
+host: www.vx68k.org
+basePath: /wp-json/wp/v2
+consumes:
+  - application/json
+  - application/x-www-form-urlencoded
+produces:
+  - application/json
+schemes:
+  - https
+paths:
+  '/posts':
+    get:
+      summary: List Posts
+      externalDocs:
+        url: https://developer.wordpress.org/rest-api/reference/posts/#list-posts
+      operationId: getPosts
+      parameters:
+        - $ref: '#/parameters/context'
+        - $ref: '#/parameters/page'
+        - $ref: '#/parameters/per_page'
+        - $ref: '#/parameters/search'
+        - $ref: '#/parameters/after'
+        - $ref: '#/parameters/author'
+        - $ref: '#/parameters/author_exclude'
+        - $ref: '#/parameters/before'
+        - $ref: '#/parameters/exclude'
+        - $ref: '#/parameters/include'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/order'
+        - $ref: '#/parameters/orderby'
+        - $ref: '#/parameters/slug'
+        - $ref: '#/parameters/status'
+        - $ref: '#/parameters/categories'
+        - $ref: '#/parameters/categories_exclode'
+        - $ref: '#/parameters/tags'
+        - $ref: '#/parameters/tags_exclode'
+        - $ref: '#/parameters/sticky'
+      responses:
+        '200':
+          description: Listed.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/post'
+    post:
+      summary: Create a Post
+      externalDocs:
+        url: https://developer.wordpress.org/rest-api/reference/posts/#create-a-post
+      operationId: createPost
+      parameters:
+        - name: post
+          in: body
+          description: Post.
+          schema:
+            $ref: '#/definitions/post'
+      responses:
+        '200':
+          description: Created.
+          schema:
+            $ref: '#/definitions/post'
+      security:
+        - auth: []
+  '/posts/{id}':
+    get:
+      summary: Retrieve a Post
+      externalDocs:
+        url: https://developer.wordpress.org/rest-api/reference/posts/#retrieve-a-post
+      operationId: getPost
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/context'
+      responses:
+        '200':
+          description: Retrieved.
+          schema:
+            $ref: '#/definitions/post'
+    put:
+      summary: Update a Post
+      externalDocs:
+        url: https://developer.wordpress.org/rest-api/reference/posts/#retrieve-a-post
+      operationId: updatePost
+      parameters:
+        - $ref: '#/parameters/id'
+        - name: post
+          in: body
+          description: Post.
+          schema:
+            $ref: '#/definitions/post'
+      responses:
+        '200':
+          description: Updated.
+          schema:
+            $ref: '#/definitions/post'
+      security:
+        - auth: []
+    delete:
+      summary: Delete a Post
+      externalDocs:
+        url: https://developer.wordpress.org/rest-api/reference/posts/#delete-a-post
+      operationId: deletePost
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/force'
+      responses:
+        '200':
+          description: Deleted.
+      security:
+        - auth: []
+  '/posts/{parent}/revisions':
+    get:
+      summary: List Post-revisions
+      externalDocs:
+        url: 'https://developer.wordpress.org/rest-api/reference/post-revisions/'
+      operationId: getPostRevisions
+      parameters:
+        - $ref: '#/parameters/id.parent'
+        - $ref: '#/parameters/context'
+      responses:
+        '200':
+          description: Listed.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/revision'
+      security:
+        - auth: []
+  '/posts/{parent}/revisions/{id}':
+    get:
+      summary: Retrieve a Post-revision
+      externalDocs:
+        url: 'https://developer.wordpress.org/rest-api/reference/post-revisions/#retrieve-a-post-revision'
+      operationId: getPostRevision
+      parameters:
+        - $ref: '#/parameters/id.parent'
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/context'
+      responses:
+        '200':
+          description: Revision retrieved.
+          schema:
+            $ref: '#/definitions/revision'
+      security:
+        - auth: []
+    delete:
+      summary: Delete a Post-revision
+      externalDocs:
+        url: 'http://v2.wp-api.org/reference/posts/revisions.html'
+      operationId: deletePostRevision
+      parameters:
+        - $ref: '#/parameters/id.parent'
+        - $ref: '#/parameters/id'
+      responses:
+        '200':
+          description: Revision retrieved.
+      security:
+        - auth: []
+  '/pages':
+    get:
+      summary: List Pages
+      externalDocs:
+        url: 'http://v2.wp-api.org/reference/pages/'
+      operationId: getPages
+      parameters:
+        - $ref: '#/parameters/context'
+        - $ref: '#/parameters/page'
+        - $ref: '#/parameters/per_page'
+        - $ref: '#/parameters/search'
+        - $ref: '#/parameters/after'
+        - $ref: '#/parameters/author'
+        - $ref: '#/parameters/author_exclude'
+        - $ref: '#/parameters/before'
+        - $ref: '#/parameters/exclude'
+        - $ref: '#/parameters/include'
+        - $ref: '#/parameters/menu_order'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/order'
+        - $ref: '#/parameters/orderby'
+        - $ref: '#/parameters/parent'
+        - $ref: '#/parameters/parent_exclude'
+        - $ref: '#/parameters/slug'
+        - $ref: '#/parameters/status'
+      responses:
+        '200':
+          description: Pages Listed.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/page'
+    post:
+      summary: Create a Page
+      security:
+        - auth: []
+      parameters:
+        - $ref: '#/parameters/date'
+        - $ref: '#/parameters/date_gmt'
+        - $ref: '#/parameters/password'
+        - $ref: '#/parameters/slug'
+        - $ref: '#/parameters/status'
+        - $ref: '#/parameters/parent'
+        - $ref: '#/parameters/title'
+        - $ref: '#/parameters/content'
+        - $ref: '#/parameters/author'
+        - $ref: '#/parameters/excerpt'
+        - $ref: '#/parameters/featured_media'
+        - $ref: '#/parameters/comment_status'
+        - $ref: '#/parameters/ping_status'
+        - $ref: '#/parameters/menu_order'
+        - $ref: '#/parameters/template'
+      responses:
+        '200':
+          description: Page created.
+          schema:
+            $ref: '#/definitions/page'
+  '/pages/{id}':
+    get:
+      summary: Get Single Page
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/context'
+      responses:
+        '200':
+          description: Page retrieved.
+          schema:
+            $ref: '#/definitions/page'
+    put:
+      summary: Update a Page
+      security:
+        - auth: []
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/date'
+        - $ref: '#/parameters/date_gmt'
+        - $ref: '#/parameters/password'
+        - $ref: '#/parameters/slug'
+        - $ref: '#/parameters/status'
+        - $ref: '#/parameters/parent'
+        - $ref: '#/parameters/title'
+        - $ref: '#/parameters/content'
+        - $ref: '#/parameters/author'
+        - $ref: '#/parameters/excerpt'
+        - $ref: '#/parameters/featured_media'
+        - $ref: '#/parameters/comment_status'
+        - $ref: '#/parameters/ping_status'
+        - $ref: '#/parameters/menu_order'
+        - $ref: '#/parameters/template'
+      responses:
+        '200':
+          description: Page updated.
+          schema:
+            $ref: '#/definitions/page'
+    delete:
+      summary: Delete Single Page
+      security:
+        - auth: []
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/force'
+      responses:
+        '200':
+          description: Post deleted.
+  /media:
+    get:
+      summary: List Media
+      description: >-
+        Scope under which the request is made; determines fields present in
+        response.
+      externalDocs:
+        description: More information here
+        url: 'http://v2.wp-api.org/reference/media/'
+      parameters:
+        - $ref: '#/parameters/context'
+        - $ref: '#/parameters/page'
+        - $ref: '#/parameters/per_page'
+        - $ref: '#/parameters/search'
+        - $ref: '#/parameters/after'
+        - $ref: '#/parameters/author'
+        - $ref: '#/parameters/author_exclude'
+        - $ref: '#/parameters/before'
+        - $ref: '#/parameters/exclude'
+        - $ref: '#/parameters/include'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/order'
+        - $ref: '#/parameters/orderby'
+        - $ref: '#/parameters/parent'
+        - $ref: '#/parameters/parent_exclude'
+        - $ref: '#/parameters/slug'
+        - $ref: '#/parameters/status'
+        - $ref: '#/parameters/media_type'
+        - $ref: '#/parameters/mime_type'
+      responses:
+        '200':
+          description: Media Listed.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/media'
+    post:
+      summary: Create Media
+      security:
+        - auth: []
+      parameters:
+        - $ref: '#/parameters/date'
+        - $ref: '#/parameters/date_gmt'
+        - $ref: '#/parameters/password'
+        - $ref: '#/parameters/slug'
+        - $ref: '#/parameters/status'
+        - $ref: '#/parameters/title'
+        - $ref: '#/parameters/author'
+        - $ref: '#/parameters/comment_status'
+        - $ref: '#/parameters/ping_status'
+        - $ref: '#/parameters/alt_text'
+        - $ref: '#/parameters/caption'
+        - $ref: '#/parameters/description'
+        - $ref: '#/parameters/post'
+      responses:
+        '200':
+          description: Media created.
+          schema:
+            $ref: '#/definitions/media'
+  '/media/{id}':
+    get:
+      summary: Get Single Media
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/context'
+      responses:
+        '200':
+          description: Page retrieved.
+          schema:
+            $ref: '#/definitions/media'
+    post:
+      summary: Update Single Media
+      security:
+        - auth: []
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/date'
+        - $ref: '#/parameters/date_gmt'
+        - $ref: '#/parameters/password'
+        - $ref: '#/parameters/slug'
+        - $ref: '#/parameters/status'
+        - $ref: '#/parameters/title'
+        - $ref: '#/parameters/author'
+        - $ref: '#/parameters/comment_status'
+        - $ref: '#/parameters/ping_status'
+        - $ref: '#/parameters/alt_text'
+        - $ref: '#/parameters/caption'
+        - $ref: '#/parameters/description'
+        - $ref: '#/parameters/post'
+      responses:
+        '200':
+          description: Page updated.
+          schema:
+            $ref: '#/definitions/media'
+    delete:
+      summary: Delete Single Media
+      security:
+        - auth: []
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/force'
+      responses:
+        '200':
+          description: Media deleted.
+  /types:
+    get:
+      summary: List Type
+      description: >-
+        Scope under which the request is made; determines fields present in
+        response.
+      externalDocs:
+        description: More information here
+        url: 'http://v2.wp-api.org/reference/types/'
+      parameters:
+        - $ref: '#/parameters/context'
+      responses:
+        '200':
+          description: Types Listed.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/type'
+  '/types/{id}':
+    get:
+      summary: Get Single Type
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/context'
+      responses:
+        '200':
+          description: Type retrieved.
+          schema:
+            $ref: '#/definitions/type'
+  /statuses:
+    get:
+      summary: List Status
+      description: >-
+        Scope under which the request is made; determines fields present in
+        response.
+      externalDocs:
+        description: More information here
+        url: 'http://v2.wp-api.org/reference/statuses/'
+      parameters:
+        - $ref: '#/parameters/context'
+      responses:
+        '200':
+          description: Statuses Listed.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/status'
+  '/statuses/{id}':
+    get:
+      summary: Get Single Status
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/context'
+      responses:
+        '200':
+          description: Status retrieved.
+          schema:
+            $ref: '#/definitions/status'
+  /comments:
+    get:
+      summary: List Comments
+      description: >-
+        Scope under which the request is made; determines fields present in
+        response.
+      externalDocs:
+        description: More information here
+        url: 'http://v2.wp-api.org/reference/comments/'
+      parameters:
+        - $ref: '#/parameters/context'
+        - $ref: '#/parameters/page'
+        - $ref: '#/parameters/per_page'
+        - $ref: '#/parameters/search'
+        - $ref: '#/parameters/after'
+        - $ref: '#/parameters/author'
+        - $ref: '#/parameters/author_exclude'
+        - $ref: '#/parameters/author_email'
+        - $ref: '#/parameters/before'
+        - $ref: '#/parameters/exclude'
+        - $ref: '#/parameters/include'
+        - $ref: '#/parameters/karma'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/order'
+        - $ref: '#/parameters/orderby'
+        - $ref: '#/parameters/parent'
+        - $ref: '#/parameters/parent_exclude'
+        - $ref: '#/parameters/post'
+        - $ref: '#/parameters/status'
+        - $ref: '#/parameters/typeOfComment'
+      responses:
+        '200':
+          description: Comments Listed.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/comment'
+    post:
+      summary: Create Comment
+      security:
+        - auth: []
+      parameters:
+        - $ref: '#/parameters/date'
+        - $ref: '#/parameters/date_gmt'
+        - $ref: '#/parameters/password'
+        - $ref: '#/parameters/slug'
+        - $ref: '#/parameters/status'
+        - $ref: '#/parameters/title'
+        - $ref: '#/parameters/author'
+        - $ref: '#/parameters/comment_status'
+        - $ref: '#/parameters/ping_status'
+        - $ref: '#/parameters/alt_text'
+        - $ref: '#/parameters/caption'
+        - $ref: '#/parameters/description'
+        - $ref: '#/parameters/post'
+      responses:
+        '200':
+          description: Comment created.
+          schema:
+            $ref: '#/definitions/comment'
+  '/comments/{id}':
+    get:
+      summary: Get Single Comment
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/context'
+      responses:
+        '200':
+          description: Comment retrieved.
+          schema:
+            $ref: '#/definitions/comment'
+    post:
+      summary: Update Single Comment
+      security:
+        - auth: []
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/date'
+        - $ref: '#/parameters/date_gmt'
+        - $ref: '#/parameters/password'
+        - $ref: '#/parameters/slug'
+        - $ref: '#/parameters/status'
+        - $ref: '#/parameters/title'
+        - $ref: '#/parameters/author'
+        - $ref: '#/parameters/comment_status'
+        - $ref: '#/parameters/ping_status'
+        - $ref: '#/parameters/alt_text'
+        - $ref: '#/parameters/caption'
+        - $ref: '#/parameters/description'
+        - $ref: '#/parameters/post'
+      responses:
+        '200':
+          description: Page updated.
+          schema:
+            $ref: '#/definitions/comment'
+    delete:
+      summary: Delete Single Comment
+      security:
+        - auth: []
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/force'
+      responses:
+        '200':
+          description: Comment deleted.
+  /taxonomies:
+    get:
+      summary: List Taxonomy
+      externalDocs:
+        description: More information here
+        url: 'http://v2.wp-api.org/reference/taxonomies/'
+      parameters:
+        - $ref: '#/parameters/context'
+        - $ref: '#/parameters/typeOfTaxonomy'
+      responses:
+        '200':
+          description: Types Listed.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/taxonomy'
+  '/taxonomies/{id}':
+    get:
+      summary: Get Single Taxonomy
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/context'
+      responses:
+        '200':
+          description: Taxonomy retrieved.
+          schema:
+            $ref: '#/definitions/taxonomy'
+  /categories:
+    get:
+      summary: List categories
+      externalDocs:
+        description: More information here
+        url: 'http://v2.wp-api.org/reference/categories/'
+      parameters:
+        - $ref: '#/parameters/context'
+        - $ref: '#/parameters/page'
+        - $ref: '#/parameters/per_page'
+        - $ref: '#/parameters/search'
+        - $ref: '#/parameters/hide_empty'
+        - $ref: '#/parameters/exclude'
+        - $ref: '#/parameters/include'
+        - $ref: '#/parameters/order'
+        - $ref: '#/parameters/orderby'
+        - $ref: '#/parameters/parent'
+        - $ref: '#/parameters/post'
+        - $ref: '#/parameters/slug'
+      responses:
+        '200':
+          description: Category Listed.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/category'
+    post:
+      summary: Create Category
+      security:
+        - auth: []
+      parameters:
+        - $ref: '#/parameters/description'
+        - $ref: '#/parameters/name'
+        - $ref: '#/parameters/slug'
+        - $ref: '#/parameters/parent'
+      responses:
+        '200':
+          description: Category created.
+          schema:
+            $ref: '#/definitions/category'
+  '/categories/{id}':
+    get:
+      summary: Get Single Category
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/context'
+      responses:
+        '200':
+          description: Category retrieved.
+          schema:
+            $ref: '#/definitions/category'
+    post:
+      summary: Update Single Category
+      security:
+        - auth: []
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/description'
+        - $ref: '#/parameters/name'
+        - $ref: '#/parameters/slug'
+        - $ref: '#/parameters/parent'
+      responses:
+        '200':
+          description: Category updated.
+          schema:
+            $ref: '#/definitions/category'
+    delete:
+      summary: Delete Single Category
+      security:
+        - auth: []
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/force'
+      responses:
+        '200':
+          description: Category deleted.
+  /tags:
+    get:
+      summary: List Tags
+      externalDocs:
+        description: More information here
+        url: 'http://v2.wp-api.org/reference/tags/'
+      parameters:
+        - $ref: '#/parameters/context'
+        - $ref: '#/parameters/page'
+        - $ref: '#/parameters/per_page'
+        - $ref: '#/parameters/search'
+        - $ref: '#/parameters/exclude'
+        - $ref: '#/parameters/include'
+        - $ref: '#/parameters/order'
+        - $ref: '#/parameters/orderby'
+        - $ref: '#/parameters/post'
+        - $ref: '#/parameters/slug'
+      responses:
+        '200':
+          description: Tags Listed.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/tag'
+    post:
+      summary: Create Tag
+      security:
+        - auth: []
+      parameters:
+        - $ref: '#/parameters/description'
+        - $ref: '#/parameters/name'
+        - $ref: '#/parameters/slug'
+      responses:
+        '200':
+          description: Tag created.
+          schema:
+            $ref: '#/definitions/tag'
+  '/tags/{id}':
+    get:
+      summary: Get Single Tag
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/context'
+      responses:
+        '200':
+          description: Tag retrieved.
+          schema:
+            $ref: '#/definitions/tag'
+    post:
+      summary: Update Single Tag
+      security:
+        - auth: []
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/description'
+        - $ref: '#/parameters/name'
+        - $ref: '#/parameters/slug'
+      responses:
+        '200':
+          description: Tag updated.
+          schema:
+            $ref: '#/definitions/tag'
+    delete:
+      summary: Delete Single Tag
+      security:
+        - auth: []
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/force'
+      responses:
+        '200':
+          description: Tag deleted.
+  /users:
+    get:
+      summary: List Tags
+      externalDocs:
+        description: More information here
+        url: 'http://v2.wp-api.org/reference/users/'
+      parameters:
+        - $ref: '#/parameters/context'
+        - $ref: '#/parameters/page'
+        - $ref: '#/parameters/per_page'
+        - $ref: '#/parameters/search'
+        - $ref: '#/parameters/exclude'
+        - $ref: '#/parameters/include'
+        - $ref: '#/parameters/order'
+        - $ref: '#/parameters/orderby'
+        - $ref: '#/parameters/roles'
+        - $ref: '#/parameters/slug'
+      responses:
+        '200':
+          description: Users Listed.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/user'
+    post:
+      summary: Create User
+      security:
+        - auth: []
+      parameters:
+        - $ref: '#/parameters/username'
+        - $ref: '#/parameters/name'
+        - $ref: '#/parameters/first_name'
+        - $ref: '#/parameters/last_name'
+        - $ref: '#/parameters/email'
+        - $ref: '#/parameters/url'
+        - $ref: '#/parameters/description'
+        - $ref: '#/parameters/nickname'
+        - $ref: '#/parameters/slug'
+        - $ref: '#/parameters/roles'
+        - $ref: '#/parameters/password'
+        - $ref: '#/parameters/capabilities'
+      responses:
+        '200':
+          description: User created.
+          schema:
+            $ref: '#/definitions/user'
+  '/users/{id}':
+    get:
+      summary: Get Single User
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/context'
+      responses:
+        '200':
+          description: User retrieved.
+          schema:
+            $ref: '#/definitions/user'
+    post:
+      summary: Update Single User
+      security:
+        - auth: []
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/username'
+        - $ref: '#/parameters/name'
+        - $ref: '#/parameters/first_name'
+        - $ref: '#/parameters/last_name'
+        - $ref: '#/parameters/email'
+        - $ref: '#/parameters/url'
+        - $ref: '#/parameters/description'
+        - $ref: '#/parameters/nickname'
+        - $ref: '#/parameters/slug'
+        - $ref: '#/parameters/roles'
+        - $ref: '#/parameters/password'
+        - $ref: '#/parameters/capabilities'
+      responses:
+        '200':
+          description: User updated.
+          schema:
+            $ref: '#/definitions/user'
+    delete:
+      summary: Delete Single User
+      security:
+        - auth: []
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/force'
+        - $ref: '#/parameters/reassign'
+      responses:
+        '200':
+          description: User deleted.
+definitions:
+  commonPostPage:
+    properties:
+      date:
+        description: |-
+          The date the object was published, in the site's timezone.
+
+          Context: `view`, `edit`, `embed`
+        type: string
+        format: date-time
+      date_gmt:
+        description: |-
+          The date the object was published, as GMT.
+
+          Context: `view`, `edit`
+        type: string
+        format: date-time
+      guid:
+        description: |-
+          The globally unique identifier for the object.
+
+          Read only
+
+          Context: `view`, `edit`
+        type: object
+        readOnly: true
+      id:
+        description: |-
+          Unique identifier for the object.
+
+          Read only
+
+          Context: `view`, `edit`, `embed`
+        type: integer
+        readOnly: true
+      link:
+        description: |-
+          URL to the object.
+
+          Read only
+
+          Context: `view`, `edit`, `embed`
+        type: string
+        format: uri
+        readOnly: true
+      modified:
+        description: |-
+          The date the object was last modified, in the site's timezone.
+
+          Read only
+
+          Context: `view`, `edit`
+        type: string
+        format: date-time
+        readOnly: true
+      modified_gmt:
+        description: |-
+          The date the object was last modified, as GMT.
+
+          Read only
+
+          Context: view, edit
+        type: string
+        format: date-time
+        readOnly: true
+      slug:
+        description: |-
+          An alphanumeric identifier for the object unique to its type.
+
+          Context: view, edit, embed
+        type: string
+      status:
+        description: |-
+          A named status for the object.
+
+          Context: `view`, `edit`
+
+          One of: `publish`, `future`, `draft`, `pending`, `private` 
+        type: string
+        enum:
+          - publish
+          - future
+          - draft
+          - pending
+          - private
+      type:
+        description: |-
+          Type of Post for the object.
+
+          Read only
+
+          Context: `view`, `edit`, `embed`
+        type: string
+        readOnly: true
+      password:
+        description: |-
+          A password to protect access to the content and excerpt.
+
+          Context: edit
+        type: string
+        format: password
+      title:
+        description: |-
+          The title for the object.
+
+          Context: `view`, `edit`, `embed`
+        type: object
+      content:
+        description: |-
+          The content for the object.
+
+          Context: `view`, `edit`
+        type: object
+      author:
+        description: |-
+          The ID for the author of the object.
+
+          Context: `view`, `edit`, `embed`
+        type: integer
+      excerpt:
+        description: |-
+          The excerpt for the object.
+
+          Context: `view`, `edit`, `embed`
+        type: object
+      featured_media:
+        description: |-
+          The ID of the featured media for the object.
+
+          Context: `view`, `edit`, `embed`
+        type: integer
+      comment_status:
+        description: |-
+          Whether or not comments are open on the object.
+
+          Context: `view`, `edit`
+
+          One of: `open`, `closed`
+        type: string
+        enum:
+          - open
+          - closed
+      ping_status:
+        description: |-
+          Whether or not the object can be pinged.
+
+          Context: `view`, `edit`
+
+          One of: `open`, `closed`
+        type: string
+        enum:
+          - open
+          - closed
+  post:
+    allOf:
+      - $ref: '#/definitions/commonPostPage'
+      - type: object
+        properties:
+          format:
+            description: |-
+              The format for the object.
+
+              Context: `view`, `edit`
+
+              One of: `standard`, `aside`, `chat`, `gallery`, `link`, `image`, `quote`, `status`, `video`, `audio` 
+            type: string
+            enum:
+              - standard
+              - aside
+              - chat
+              - gallery
+              - link
+              - image
+              - quote
+              - status
+              - video
+              - audio
+          meta:
+            description: |-
+              Meta fields.
+
+              Context: `view`, `edit`
+            type: string
+          sticky:
+            description: |-
+              Whether or not the object should be treated as sticky.
+
+              Context: `view`, `edit`
+            type: boolean
+          template:
+            description: |-
+              The theme file to use to display the object.
+
+              Context: `view`, `edit`
+            type: string
+          categories:
+            description: |-
+              The terms assigned to the object in the category taxonomy.
+
+              Context: `view`, `edit`
+            type: array
+            items:
+              type: integer
+          tags:
+            description: |-
+              The terms assigned to the object in the post_tag taxonomy.
+
+              Context: `view`, `edit`
+            type: array
+            items:
+              type: integer
+  user:
+    properties:
+      id:
+        type: integer
+        description: Unique identifier for the object.
+      username:
+        type: string
+        description: Login name for the resource.
+      name:
+        type: string
+        description: Display name for the resource.
+      first_name:
+        type: string
+        description: First name for the resource.
+      last_name:
+        type: string
+        description: Last name for the resource.
+      email:
+        type: string
+        description: The email address for the resource.
+      url:
+        type: string
+        description: URL of the resource.
+      description:
+        type: string
+        description: Description of the resource.
+      link:
+        type: string
+        description: Author URL to the resource.
+      nickname:
+        type: string
+        description: The nickname for the resource.
+      slug:
+        type: string
+        description: An alphanumeric identifier for the resource.
+      registered_date:
+        type: string
+        description: Registration date for the resource.
+      roles:
+        type: array
+        items:
+          type: string
+        description: Roles assigned to the resource.
+      password:
+        type: string
+        description: Password for the resource (never included).
+      capabilities:
+        type: array
+        items:
+          type: string
+        description: All capabilities assigned to the resource.
+      extra_capabilities:
+        type: array
+        items:
+          type: string
+        description: Any extra capabilities assigned to the resource.
+      avatar_urls:
+        type: array
+        items:
+          type: string
+        description: Avatar URLs for the resource.
+  comment:
+    properties:
+      id:
+        type: integer
+        description: Unique identifier for the object.
+      author:
+        type: string
+        description: The id for the author of the object.
+      author_email:
+        type: string
+        description: Email address for the object author.
+      author_ip:
+        type: string
+        description: IP address for the object author.
+      author_name:
+        type: string
+        description: Display name for the object author.
+      author_url:
+        type: string
+        description: URL for the object author.
+      author_user_agent:
+        type: string
+        description: User agent for the object author.
+      content:
+        type: string
+        description: The content for the object.
+      date:
+        type: string
+        description: 'The date the object was published, in the site''s timezone.'
+        format: date-time
+      date_gmt:
+        type: string
+        description: 'The date the object was published, as GMT.'
+        format: date-time
+      karma:
+        type: string
+        description: Karma for the object
+      link:
+        type: string
+        description: URL to the object.
+      parent:
+        type: integer
+        description: The id for the parent of the object.
+      post:
+        type: string
+        description: The id for the associated post of the resource.
+      status:
+        type: string
+        enum:
+          - publish
+          - future
+          - draft
+          - pending
+          - private
+        description: A named status for the object.
+      type:
+        type: string
+        description: Type of Post for the object.
+      author_avatar_urls:
+        type: string
+        description: Avatar URLs for the object author.
+  status:
+    properties:
+      private:
+        type: boolean
+        description: Whether posts with this resource should be private.
+      protected:
+        type: boolean
+        description: Whether posts with this resource should be protected.
+      public:
+        type: boolean
+        description: >-
+          Whether posts of this resource should be shown in the front end of the
+          site.
+      queryable:
+        type: boolean
+        description: Whether posts with this resource should be publicly-queryable.
+      show_in_list:
+        type: boolean
+        description: Whether to include posts in the edit listing for their post type.
+      name:
+        type: string
+        description: The title for the resource.
+      slug:
+        type: string
+        description: An alphanumeric identifier for the object unique to its type.
+  taxonomy:
+    allOf:
+      - $ref: '#/definitions/type'
+      - type: object
+        properties:
+          show_cloud:
+            type: boolean
+            description: Whether or not the term cloud should be displayed.
+          types:
+            type: array
+            description: Types associated with resource.
+            items:
+              type: string
+  category:
+    allOf:
+      - $ref: '#/definitions/tag'
+      - type: object
+        properties:
+          parent:
+            type: integer
+            description: The id for the parent of the object.
+  tag:
+    properties:
+      id:
+        type: integer
+        description: Unique identifier for the object.
+      count:
+        type: integer
+        description: Number of published posts for the resource.
+      description:
+        type: string
+        description: The description for the resource.
+      link:
+        type: string
+        description: URL to the object.
+      name:
+        type: string
+        description: The title for the resource.
+      slug:
+        type: string
+        description: An alphanumeric identifier for the object unique to its type.
+      taxonomy:
+        type: string
+        enum:
+          - category
+          - post_tag
+          - nav_menu
+          - link_category
+          - post_format
+        description: Type attribution for the resource.
+  type:
+    properties:
+      capabilities:
+        type: array
+        description: All capabilities used by the resource.
+        items:
+          type: string
+      description:
+        type: string
+        description: A human-readable description of the resource.
+      hierarchical:
+        type: string
+        description: Whether or not the resource should have children.
+      labels:
+        type: string
+        description: Human-readable labels for the resource for various contexts.
+      name:
+        type: string
+        description: The title for the resource.
+      slug:
+        type: string
+        description: An alphanumeric identifier for the object unique to its type.
+  media:
+    properties:
+      date:
+        type: string
+        description: 'The date the object was published, in the site''s timezone.'
+        format: date-time
+      date_gmt:
+        type: string
+        description: 'The date the object was published, as GMT.'
+        format: date-time
+      guid:
+        type: string
+        description: The globally unique identifier for the object.
+      id:
+        type: integer
+        description: Unique identifier for the object.
+      modified:
+        type: string
+        description: 'The date the object was last modified, in the site''s timezone.'
+        format: date-time
+      modified_gmt:
+        type: string
+        description: 'The date the object was last modified, as GMT.'
+        format: date-time
+      password:
+        type: string
+        description: The A password to protect access to the post.
+      slug:
+        type: string
+        description: An alphanumeric identifier for the object unique to its type.
+      status:
+        type: string
+        enum:
+          - publish
+          - future
+          - draft
+          - pending
+          - private
+        description: A named status for the object.
+      type:
+        type: string
+        description: Type of Post for the object.
+      title:
+        type: string
+        description: The title for the object.
+      author:
+        type: string
+        description: The id for the author of the object.
+      comment_status:
+        type: string
+        enum:
+          - open
+          - closed
+        description: Whether or not comments are open on the object
+      ping_status:
+        type: string
+        enum:
+          - open
+          - closed
+        description: Whether or not the object can be pinged.
+      alt_text:
+        type: string
+        description: Alternative text to display when resource is not displayed
+      caption:
+        type: string
+        description: The caption for the resource.
+      description:
+        type: string
+        description: The description for the resource.
+      media_type:
+        type: string
+        enum:
+          - image
+          - file
+        description: Type of resource.
+      mime_type:
+        type: string
+        description: Mime type of resource.
+      media_details:
+        type: string
+        description: 'Details about the resource file, specific to its type.'
+      post:
+        type: string
+        description: The id for the associated post of the resource.
+      source_url:
+        type: string
+        description: URL to the original resource file.
+  revision:
+    properties:
+      date:
+        type: string
+        description: 'The date the object was published, in the site''s timezone.'
+        format: date-time
+      date_gmt:
+        type: string
+        description: 'The date the object was published, as GMT.'
+        format: date-time
+      guid:
+        type: string
+        description: The globally unique identifier for the object.
+      id:
+        type: integer
+        description: Unique identifier for the object.
+      modified:
+        type: string
+        description: 'The date the object was last modified, in the site''s timezone.'
+        format: date-time
+      modified_gmt:
+        type: string
+        description: 'The date the object was last modified, as GMT.'
+        format: date-time
+      slug:
+        type: string
+        description: An alphanumeric identifier for the object unique to its type.
+      title:
+        type: string
+        description: The title for the object.
+      content:
+        type: string
+        description: The content for the object.
+      author:
+        type: string
+        description: The id for the author of the object.
+      excerpt:
+        type: string
+        description: The excerpt for the object
+      parent:
+        type: integer
+        description: The id for the parent of the object.
+  page:
+    allOf:
+      - $ref: '#/definitions/commonPostPage'
+      - type: object
+        properties:
+          parent:
+            type: integer
+            description: The id for the parent of the object.
+          menu_order:
+            type: integer
+            description: The order of the object in relation to other object of its type.
+          template:
+            type: integer
+            description: The theme file to use to display the object.
+parameters:
+  after:
+    name: after
+    in: query
+    description: |-
+      Limit response to resources published after a given ISO8601 compliant date.
+    type: string
+    format: date-time
+  author:
+    name: author
+    in: query
+    description: |-
+      Limit result set to posts assigned to specific authors.
+    type: array
+    items:
+      type: integer
+  author_exclude:
+    name: author_exclude
+    in: query
+    description: |-
+      Ensure result set excludes posts assigned to specific authors.
+    type: array
+    items:
+      type: integer
+  before:
+    name: before
+    in: query
+    description: |-
+      Limit response to resources published before a given ISO8601 compliant date.
+    type: string
+    format: date-time
+  categories:
+    name: categories
+    in: query
+    description: |-
+      Limit result set to all items that have the specified term assigned in the categories taxonomy.
+    type: array
+    items:
+      type: integer
+  categories_exclode:
+    name: categories_exclude
+    in: query
+    description: |-
+      Limit result set to all items except those that have the specified term assigned in the categories taxonomy.
+    type: array
+    items:
+      type: integer
+  context:
+    name: context
+    in: query
+    description: |-
+      Scope under which the request is made; determines fields present in response.
+
+      Default: `view`
+
+      One of: `view`, `embed`, `edit`
+    type: string
+    default: view
+    enum:
+      - view
+      - embed
+      - edit
+  exclude:
+    name: exclude
+    in: query
+    description: |-
+      Ensure result set excludes specific IDs.
+    type: array
+    items:
+      type: integer
+  include:
+    name: include
+    in: query
+    description: |-
+      Ensure result set includes specific IDs.
+    type: array
+    items:
+      type: integer
+  offset:
+    name: offset
+    in: query
+    description: |-
+      Offset the result set by a specific number of items.
+    type: integer
+  order:
+    name: order
+    in: query
+    description: |-
+      Order sort attribute ascending or descending.
+
+      Default: `desc`
+
+      One of: `asc`, `desc`
+    type: string
+    default: desc
+    enum:
+      - asc
+      - desc
+  orderby:
+    name: orderby
+    in: query
+    description: |-
+      Sort collection by object attribute.
+
+      Default: `date`
+
+      One of: `author`, `date`, `id`, `include`, `modified`, `parent`, `relevance`, `slug`, `title`
+    type: string
+    default: date
+    enum:
+      - author
+      - date
+      - id
+      - include
+      - modified
+      - parent
+      - relevance
+      - slug
+      - title
+  page:
+    name: page
+    in: query
+    description: |-
+      Current page of the collection.
+
+      Default: `1`
+    type: integer
+    default: 1
+  per_page:
+    name: per_page
+    in: query
+    description: |-
+      Maximum number of items to be returned in result set.
+
+      Default: `10`
+    type: integer
+    default: 10
+  search:
+    name: search
+    in: query
+    description: |-
+      Limit results to those matching a string.
+    type: string
+  slug:
+    name: slug
+    in: query
+    description: |-
+      Limit result set to posts with one or more specific slugs.
+    type: array
+    items:
+      type: string
+  status:
+    name: status
+    in: query
+    description: |-
+      Limit result set to posts assigned one or more statuses.
+
+      Default: `publish`
+    type: array
+    items:
+      type: string
+  sticky:
+    name: sticky
+    description: |-
+      Limit result set to items that are sticky.
+    in: query
+    type: boolean
+  tags:
+    name: tags
+    in: query
+    description: |-
+      Limit result set to all items that have the specified term assigned in the tags taxonomy.
+    type: array
+    items:
+      type: integer
+  tags_exclode:
+    name: tags_exclude
+    in: query
+    description: |-
+      Limit result set to all items except those that have the specified term assigned in the tags taxonomy.
+    type: array
+    items:
+      type: integer
+  id:
+    name: id
+    in: path
+    description: |-
+      Unique identifier of the object.
+    type: integer
+    required: true
+  id.parent:
+    name: parent
+    in: path
+    description: |-
+      The ID of the parent of the object.
+    type: integer
+    required: true
+  force:
+    name: force
+    in: query
+    description: Whether to bypass trash and force deletion.
+    type: boolean
+    required: false
+  filter:
+    name: filter
+    in: query
+    description: >-
+      Use WP Query arguments to modify the response; private query vars require
+      appropriate authorization.
+    type: string
+  date:
+    name: date
+    in: query
+    type: string
+    description: 'The date the object was published, in the site''s timezone.'
+    format: date-time
+  date_gmt:
+    name: date_gmt
+    in: query
+    type: string
+    description: 'The date the object was published, as GMT.'
+    format: date-time
+  password:
+    name: password
+    in: query
+    type: string
+    description: The A password to protect access to the post.
+  title:
+    name: title
+    in: query
+    type: string
+    description: The title for the object.
+  content:
+    name: content
+    in: query
+    type: string
+    description: The content for the object.
+  excerpt:
+    name: excerpt
+    in: query
+    type: string
+    description: The excerpt for the object
+  featured_media:
+    name: featured_media
+    in: query
+    type: string
+    description: The id of the featured media for the object.
+  comment_status:
+    name: comment_status
+    in: query
+    type: string
+    enum:
+      - open
+      - closed
+    description: Whether or not comments are open on the object
+  ping_status:
+    name: ping_status
+    in: query
+    type: string
+    enum:
+      - open
+      - closed
+    description: Whether or not the object can be pinged.
+  menu_order:
+    name: menu_order
+    in: query
+    description: The order of the object in relation to other object of its type.
+    type: integer
+  template:
+    name: template
+    in: query
+    type: integer
+    description: The theme file to use to display the object.
+  parent:
+    name: parent
+    in: query
+    type: integer
+  parent_exclude:
+    name: parent_exclude
+    in: query
+    description: Ensure result set excludes specific ids.
+    type: string
+  post:
+    name: post
+    in: query
+    description: The id for the associated post of the resource.
+    type: string
+  description:
+    name: description
+    in: query
+    description: The description for the resource
+    type: string
+  caption:
+    name: caption
+    in: query
+    description: The caption for the resource.
+    type: string
+  alt_text:
+    name: alt_text
+    in: query
+    description: Alternative text to display when resource is not displayed.
+    type: string
+  author_email:
+    name: author_email
+    in: query
+    description: >-
+      Limit result set to that from a specific author email. Requires
+      authorization.
+    type: string
+  karma:
+    name: karma
+    in: query
+    description: >-
+      Limit result set to that of a particular comment karma. Requires
+      authorization
+    type: string
+  name:
+    name: name
+    in: query
+    description: HTML title for the resource.
+    type: string
+  hide_empty:
+    name: hide_empty
+    in: query
+    description: Whether to hide resources not assigned to any posts.
+    type: boolean
+  nickname:
+    name: nickname
+    in: query
+    description: The nickname for the resource.
+    type: string
+  last_name:
+    name: last_name
+    in: query
+    description: The last name for the resource.
+    type: string
+  first_name:
+    name: first_name
+    in: query
+    description: The first name for the resource.
+    type: string
+  username:
+    name: username
+    in: query
+    description: The user name for the resource.
+    type: string
+  url:
+    name: url
+    in: query
+    description: URL of the resource.
+    format: url
+    type: string
+  email:
+    name: email
+    in: query
+    description: Email of the resource.
+    format: email
+    type: string
+  typeOfComment:
+    name: type
+    in: query
+    description: >-
+      Limit result set to comments assigned a specific type. Requires
+      authorization. Default comment
+    type: string
+  typeOfTaxonomy:
+    name: type
+    in: query
+    description: >-
+      Limit results to taxonomies associated with a specific post type.
+    type: string
+  media_type:
+    name: media_type
+    in: query
+    description: Type of resource.
+    type: string
+    enum:
+      - file
+      - image
+  mime_type:
+    name: mime_type
+    in: query
+    description: Alternative text to display when resource is not displayed.
+    type: string
+  capabilities:
+    name: capabilities
+    in: query
+    type: array
+    description: All capabilities used by the resource.
+    items:
+      type: string
+  roles:
+    name: roles
+    in: query
+    type: array
+    description: Roles assigned to the resource.
+    items:
+      type: string
+  reassign:
+    name: reassign
+    in: query
+    type: string
+securityDefinitions:
+  auth:
+    type: basic
