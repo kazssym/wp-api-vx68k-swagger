@@ -164,8 +164,7 @@ paths:
     get:
       summary: List Categories
       externalDocs:
-        description: More information here
-        url: 'http://v2.wp-api.org/reference/categories/'
+        url: 'https://developer.wordpress.org/rest-api/reference/categories/#list-categories'
       operationId: getCategories
       parameters:
         - $ref: '#/parameters/context'
@@ -182,28 +181,35 @@ paths:
         - $ref: '#/parameters/slug'
       responses:
         '200':
-          description: Category Listed.
+          description: Listed.
           schema:
             type: array
             items:
               $ref: '#/definitions/category'
     post:
       summary: Create a Category
-      security:
-        - auth: []
+      externalDocs:
+        url: 'https://developer.wordpress.org/rest-api/reference/categories/#create-a-category'
+      operationId: createCategory
       parameters:
-        - $ref: '#/parameters/description'
-        - $ref: '#/parameters/name'
-        - $ref: '#/parameters/slug'
-        - $ref: '#/parameters/parent'
-      responses:
-        '200':
-          description: Category created.
+        - name: category
+          in: body
+          description: Category.
           schema:
             $ref: '#/definitions/category'
+      responses:
+        '200':
+          description: Created.
+          schema:
+            $ref: '#/definitions/category'
+      security:
+        - auth: []
   '/categories/{id}':
     get:
       summary: Retrieve a Category
+      externalDocs:
+        url: 'https://developer.wordpress.org/rest-api/reference/categories/#retrieve-a-category'
+      operationId: getCategory
       parameters:
         - $ref: '#/parameters/context'
       responses:
@@ -212,28 +218,35 @@ paths:
           schema:
             $ref: '#/definitions/category'
     put:
-      summary: Update Single Category
-      security:
-        - auth: []
+      summary: Update a Category
+      externalDocs:
+        url: 'https://developer.wordpress.org/rest-api/reference/categories/#update-a-category'
+      operationId: updateCategory
       parameters:
-        - $ref: '#/parameters/description'
-        - $ref: '#/parameters/name'
-        - $ref: '#/parameters/slug'
-        - $ref: '#/parameters/parent'
+        - name: category
+          in: body
+          description: Category.
+          schema:
+            $ref: '#/definitions/category'
       responses:
         '200':
           description: Category updated.
           schema:
             $ref: '#/definitions/category'
-    delete:
-      summary: Delete Single Category
       security:
         - auth: []
+    delete:
+      summary: Delete a Category
+      externalDocs:
+        url: 'https://developer.wordpress.org/rest-api/reference/categories/#delete-a-category'
+      operationId: deleteCategory
       parameters:
         - $ref: '#/parameters/force'
       responses:
         '200':
-          description: Category deleted.
+          description: Deleted.
+      security:
+        - auth: []
     parameters:
       - $ref: '#/parameters/id'
   '/pages':
