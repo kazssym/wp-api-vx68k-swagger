@@ -171,11 +171,12 @@ paths:
         - $ref: '#/parameters/page'
         - $ref: '#/parameters/per_page'
         - $ref: '#/parameters/search'
-        - $ref: '#/parameters/hide_empty'
         - $ref: '#/parameters/exclude'
         - $ref: '#/parameters/include'
+        - $ref: '#/parameters/offset'
         - $ref: '#/parameters/order'
-        - $ref: '#/parameters/orderby'
+        - $ref: '#/parameters/orderby.category'
+        - $ref: '#/parameters/hide_empty'
         - $ref: '#/parameters/parent'
         - $ref: '#/parameters/post'
         - $ref: '#/parameters/slug'
@@ -1506,6 +1507,25 @@ parameters:
       - relevance
       - slug
       - title
+  orderby.category:
+    name: orderby
+    in: query
+    description: |-
+      Sort collection by term attribute.
+
+      Default: `name`
+
+      One of: `id`, `include`, `name`, `slug`, `term_group`, `description`, `count`
+    type: string
+    default: date
+    enum:
+      - id
+      - include
+      - name
+      - slug
+      - term_group
+      - description
+      - count
   page:
     name: page
     in: query
