@@ -173,7 +173,6 @@ paths:
         - $ref: '#/parameters/search'
         - $ref: '#/parameters/exclude'
         - $ref: '#/parameters/include'
-        - $ref: '#/parameters/offset'
         - $ref: '#/parameters/order'
         - $ref: '#/parameters/orderby.category'
         - $ref: '#/parameters/hide_empty'
@@ -1517,7 +1516,7 @@ parameters:
 
       One of: `id`, `include`, `name`, `slug`, `term_group`, `description`, `count`
     type: string
-    default: date
+    default: name
     enum:
       - id
       - include
